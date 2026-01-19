@@ -24,18 +24,17 @@ git clone <repository-url>
 cd blackwake-server-finder
 
 # Build the binary
-go build -o bw-server-finder main.go
+go-winres make --in "winres/winres.json"
+go build -ldflags "-w -s" -o BlackwakeServerFinder main.go
 
 # Run the application
-./bw-server-finder
+./BlackwakeServerFinder.exe
 ```
 
 ## Usage
 
 1. Run the application:
-   ```bash
-   ./bw-server-finder
-   ```
+   Double-Click or Use Terminal```./BlackwakeServerFinder.exe```
 
 2. Use the following keyboard controls:
    - **R**: Refresh server data
@@ -57,21 +56,21 @@ Author: GongSunFangYun
 Press [R] To Re-Fetch Data | Press [Esc] To Exit
 -----------------------------------------------------------
 Commuinty Server List
-├─ [RUSSIA] DreamTeam #1 6jaWheSySx
-│   ├─ Player(s): 12/54
+├─ [RU] DreamTeam #1 6jaWheSySx
+│   ├─ Player(s): 0/54
 │   └─ Address: 185.162.95.8:28916
 ├─ [CN]Sunshine Blackwake Server
-│   ├─ Player(s): 8/54
+│   ├─ Player(s): 0/54
 │   └─ Address: 222.129.39.253:27015
 ├─ [FR] Les potes Baroudeurs eeUXYzxaDJ
-│   ├─ Player(s): 5/54
+│   ├─ Player(s): 0/54
 │   └─ Address: 137.74.178.6:27035
 └─ [US East] Legitimate Enterprise - All Modes! [Ship FF]
-    ├─ Player(s): 3/54
+    ├─ Player(s): 0/54
     └─ Address: 71.117.139.41:27015
 -----------------------------------------------------------
 Total Server Count: 4
-Total Player Count: 28
+Total Player Count: 0
 Data Uptime: 14:30:22
 ```
 
