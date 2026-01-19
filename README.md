@@ -15,7 +15,7 @@ A lightweight terminal-based utility for finding and monitoring Blackwake game s
 ## Installation
 
 ### Prerequisites
-- Go 1.16 or higher
+- Go 1.21 or higher
 
 ### Build from Source
 ```bash
