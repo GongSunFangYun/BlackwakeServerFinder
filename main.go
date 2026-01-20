@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"sort"
@@ -93,14 +94,28 @@ func displayDynamicContent() {
 
 func fetchServerData() ([]ServerInfo, int, error) {
 	url := fmt.Sprintf("https://api.steampowered.com/IGameServersService/GetServerList/v1/?key=%s&filter=appid\\420290", apiKey)
-	resp, _ := http.Get(url)
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, 0, err
+	}
 	defer resp.Body.Close()
 
 	var data map[string]interface{}
+	decoder := json.NewDecoder(resp.Body)
+	if err := decoder.Decode(&data); err != nil {
+		return nil, 0, err
+	}
 
-	response, _ := data["response"].(map[string]interface{})
+	response, ok := data["response"].(map[string]interface{})
+	if !ok {
+		return nil, 0, fmt.Errorf("invalid API response format")
+	}
 
-	serversRaw, _ := response["servers"].([]interface{})
+	serversRaw, ok := response["servers"].([]interface{})
+	if !ok {
+		return []ServerInfo{}, 0, nil
+	}
 
 	var servers []ServerInfo
 	totalPlayers := 0
@@ -181,7 +196,7 @@ func showLoadingAnimation(done chan bool, startLine int) {
 			return
 		default:
 			fmt.Printf("\033[%d;1H", startLine+1)
-			fmt.Print("\033[K") // 清除整行
+			fmt.Print("\033[K")
 
 			fmt.Printf("%s Fetching Data... ", frames[i])
 			i = (i + 1) % len(frames)
